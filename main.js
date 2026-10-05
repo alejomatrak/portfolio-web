@@ -3,10 +3,13 @@ const thumb = (p, size = '1280x720') => `https://i.vimeocdn.com/video/${p.thumb}
 const pad = (n) => String(n).padStart(2, '0');
 
 // --- Logos de marcas en la portada ---
-$('brands').innerHTML = BRANDS.map((b) => `
+// La misma fila va en la portada y en la barra fija que aparece al bajar.
+const brandsHTML = BRANDS.map((b) => `
   <li><a href="#${b.open}" aria-label="${b.name}: ver proyecto" title="${b.name}">
     ${b.logo ? `<img class="${b.crop ? 'crop' : ''} ${b.keep ? 'keep' : ''}" style="--s:${b.size || 1}" src="${b.logo}" alt="${b.name}">` : `<span>${b.name}</span>`}
   </a></li>`).join('');
+$('brands').innerHTML = brandsHTML;
+$('brandbar').innerHTML = brandsHTML;
 
 // --- Proyectos, uno debajo del otro ---
 // El video se carga al darle play, para que la página abra rápido.
@@ -52,13 +55,31 @@ document.addEventListener('click', (e) => {
 // --- Playhead y timecode según el scroll ---
 const FPS = 24;
 const DURATION = 60 * FPS; // la página "dura" un minuto
+const hero = document.querySelector('.hero');
 function onScroll() {
   const max = document.documentElement.scrollHeight - innerHeight;
   const t = max > 0 ? scrollY / max : 0;
   $('playhead').style.transform = `scaleX(${t})`;
+  // La barra de marcas aparece cuando la fila de la portada ya salió de la pantalla.
+  document.body.classList.toggle('stuck', $('brands').getBoundingClientRect().bottom < 60);
+  // La foto de la portada se difumina a medida que se baja.
+  hero.style.setProperty('--p', Math.min(1, scrollY / (hero.offsetHeight * 0.7)).toFixed(3));
   const f = Math.round(t * DURATION);
   $('timecode').textContent = `00:${pad(Math.floor(f / FPS / 60))}:${pad(Math.floor(f / FPS) % 60)}:${pad(f % FPS)}`;
 }
 addEventListener('scroll', onScroll, { passive: true });
 addEventListener('resize', onScroll);
 onScroll();
+
+// Resalta en la barra la marca del proyecto que se está viendo.
+const barLinks = [...$('brandbar').querySelectorAll('a')];
+const projectObserver = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (!e.isIntersecting) return;
+    barLinks.forEach((a) => a.classList.toggle('active', a.getAttribute('href') === `#${e.target.id}`));
+    // En pantallas angostas la barra se desliza sola hasta la marca activa.
+    const on = $('brandbar').querySelector('a.active');
+    if (on) $('brandbar').scrollTo({ left: on.offsetLeft - $('brandbar').clientWidth / 2 + on.offsetWidth / 2, behavior: 'smooth' });
+  });
+}, { rootMargin: '-45% 0px -45% 0px' });
+document.querySelectorAll('.project').forEach((p) => projectObserver.observe(p));
