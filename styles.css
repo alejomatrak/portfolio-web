@@ -86,7 +86,7 @@ h2 { font-size: clamp(40px, 6vw, 84px); margin-bottom: 28px; }
    Al bajar, la capa nítida también se difumina. */
 .hero-bg { position: absolute; inset: 0; z-index: -1; }
 .hero-bg i { position: absolute; inset: 0; }
-.hero-bg .sharp, .hero-bg .soft { background: url(img/hero.jpg?v=202610051100) 50% 60% / cover no-repeat; }
+.hero-bg .sharp, .hero-bg .soft { background: url(img/hero.jpg?v=202610051105) 50% 60% / cover no-repeat; }
 .hero-bg .sharp { inset: -24px; filter: blur(calc(var(--p) * 18px)) brightness(calc(.95 - var(--p) * .35)); }
 .hero-bg .soft {
   inset: -24px; filter: blur(14px) brightness(.6);
@@ -150,6 +150,22 @@ h2 { font-size: clamp(40px, 6vw, 84px); margin-bottom: 28px; }
 .role { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); }
 .info .chips { margin-top: 20px; }
 
+/* Botón de sonido: acompaña el scroll mientras hay un video reproduciéndose */
+.sound {
+  position: fixed; right: 16px; bottom: 16px; z-index: 25;
+  display: none; align-items: center; gap: 10px;
+  padding: 13px 18px; border-radius: 999px;
+  background: var(--fg); color: var(--bg);
+  font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, .5);
+}
+.sound.on { display: inline-flex; }
+.sound svg { width: 18px; height: 18px; flex: none; }
+.sound .waves { display: none; }
+.sound.unmuted .waves { display: inline; }
+.sound.unmuted .cross { display: none; }
+.sound.unmuted { background: var(--red); color: #fff; }
+
 /* About */
 .about { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(32px, 6vw, 96px); border-top: 1px solid var(--line); }
 .services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 44px; }
@@ -183,24 +199,29 @@ h2 { font-size: clamp(40px, 6vw, 84px); margin-bottom: 28px; }
   .services { grid-template-columns: 1fr; gap: 18px; }
   .foot { flex-direction: column; gap: 10px; }
 }
-/* Portada en teléfono: título arriba, tú nítido en el centro, el resto abajo. */
+/* Portada en teléfono: título arriba sobre zona difuminada y tú nítido debajo, de cuerpo entero.
+   La foto ocupa la primera pantalla; el texto, los botones y los logos siguen después. */
 @media (max-width: 700px) {
   .hero {
     justify-content: flex-start; padding-block: 96px 40px;
     --fs: min(18.5vw, 88px);
     --top: calc(140px + 2.85 * var(--fs)); /* donde termina el título */
-    --gap: 50svh;                          /* franja donde se ve la foto nítida */
-    --bands: #000 0, #000 var(--top), transparent calc(var(--top) + 70px), transparent calc(var(--top) + var(--gap) - 110px), #000 calc(var(--top) + var(--gap) - 10px);
+    --photo: calc(100vh + 120px);          /* alto de la foto */
   }
+  @supports (height: 1svh) { .hero { --photo: calc(100svh + 120px); } }
   .hero > :not(.hero-bg) { max-width: none; }
-  .hero h1 { font-size: var(--fs); margin-bottom: var(--gap); }
-  .hero-bg .sharp, .hero-bg .soft { background-position: 88% 50%; }
-  .hero-bg .soft { inset: 0 -24px; -webkit-mask-image: linear-gradient(180deg, var(--bands)); mask-image: linear-gradient(180deg, var(--bands)); }
+  .hero h1 { font-size: var(--fs); margin-bottom: calc(var(--photo) - var(--top) - 70px); }
+  .hero-bg { bottom: auto; height: var(--photo); overflow: hidden; }
+  .hero-bg .sharp, .hero-bg .soft { inset: 0; background: url(img/hero-m.jpg?v=202610051105) 70% 100% / cover no-repeat; }
+  .hero-bg .soft {
+    -webkit-mask-image: linear-gradient(180deg, #000 0, #000 var(--top), transparent calc(var(--top) + 60px));
+    mask-image: linear-gradient(180deg, #000 0, #000 var(--top), transparent calc(var(--top) + 60px));
+  }
   .hero-bg .shade {
-    -webkit-mask-image: linear-gradient(180deg, var(--bands)); mask-image: linear-gradient(180deg, var(--bands));
     background:
-      linear-gradient(180deg, rgba(10, 10, 11, .7) 0%, rgba(10, 10, 11, .45) 55%, rgba(10, 10, 11, .75) 80%, var(--bg) 100%),
-      radial-gradient(80% 30% at 20% 6%, rgba(224, 38, 28, .3), transparent 70%);
+      linear-gradient(180deg, rgba(10, 10, 11, .7) 0, rgba(10, 10, 11, .5) var(--top), transparent calc(var(--top) + 80px)),
+      linear-gradient(0deg, var(--bg) 0%, var(--bg) 3%, transparent 22%),
+      radial-gradient(80% 240px at 20% 60px, rgba(224, 38, 28, .3), transparent 70%);
   }
 }
 @media (max-width: 420px) {

@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0a0b'/%3E%3Cpath d='M12 9l12 7-12 7z' fill='%23e0261c'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="styles.css?v=202610051100">
+<link rel="stylesheet" href="styles.css?v=202610051105">
 </head>
 <body>
 
@@ -79,7 +79,16 @@
   </section>
 </main>
 
-<script src="projects.js?v=202610051100"></script>
-<script src="main.js?v=202610051100"></script>
+<button class="sound" id="sound" type="button" aria-pressed="false">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/>
+    <g class="waves"><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></g>
+    <g class="cross"><path d="M17 9l5 6M22 9l-5 6"/></g>
+  </svg>
+  <span id="sound-label">Activar sonido</span>
+</button>
+
+<script src="projects.js?v=202610051105"></script>
+<script src="main.js?v=202610051105"></script>
 </body>
 </html>

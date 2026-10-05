@@ -37,6 +37,21 @@ $('feed').innerHTML = [...PROJECTS, REEL].map((p, i) => `
     </div>
   </article>`).join('');
 
+const VIMEO = 'https://player.vimeo.com';
+const sound = $('sound');
+let muted = true;
+const current = () => document.querySelector('.player.playing iframe');
+const tell = (method, value) => {
+  const f = current();
+  if (f) f.contentWindow.postMessage(JSON.stringify(value === undefined ? { method } : { method, value }), VIMEO);
+};
+function showMuted(m) {
+  muted = m;
+  sound.classList.toggle('unmuted', !m);
+  sound.setAttribute('aria-pressed', String(!m));
+  $('sound-label').textContent = m ? 'Activar sonido' : 'Silenciar';
+}
+
 function play(btn) {
   // Solo suena un video a la vez: los demás vuelven a su portada.
   document.querySelectorAll('.player.playing').forEach((el) => {
@@ -45,11 +60,35 @@ function play(btn) {
   });
   const player = btn.parentElement;
   player.classList.add('playing');
-  player.insertAdjacentHTML('beforeend', `<iframe src="https://player.vimeo.com/video/${btn.dataset.vimeo}?autoplay=1&title=0&byline=0&portrait=0&dnt=1" title="${btn.dataset.title}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`);
+  player.insertAdjacentHTML('beforeend', `<iframe src="${VIMEO}/video/${btn.dataset.vimeo}?autoplay=1&title=0&byline=0&portrait=0&dnt=1&playsinline=1" title="${btn.dataset.title}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`);
+  sound.classList.add('on');
 }
 document.addEventListener('click', (e) => {
   const btn = e.target.closest('.player button');
   if (btn) play(btn);
+});
+
+// El reproductor de Vimeo avisa si arrancó en silencio (en teléfonos suele hacerlo).
+addEventListener('message', (e) => {
+  const f = current();
+  if (e.origin !== VIMEO || !f || e.source !== f.contentWindow) return;
+  let d = e.data;
+  try { if (typeof d === 'string') d = JSON.parse(d); } catch { return; }
+  if (d.event === 'ready') {
+    tell('addEventListener', 'volumechange');
+    tell('addEventListener', 'play');
+    tell('getMuted');
+  } else if (d.event === 'volumechange' || d.event === 'play') {
+    tell('getMuted');
+  } else if (d.method === 'getMuted') {
+    showMuted(!!d.value);
+  }
+});
+sound.addEventListener('click', () => {
+  const next = !muted;
+  tell('setMuted', next);
+  if (!next) { tell('setVolume', 1); tell('play'); }
+  showMuted(next);
 });
 
 // --- Playhead y timecode según el scroll ---
