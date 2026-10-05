@@ -86,7 +86,7 @@ h2 { font-size: clamp(40px, 6vw, 84px); margin-bottom: 28px; }
    Al bajar, la capa nítida también se difumina. */
 .hero-bg { position: absolute; inset: 0; z-index: -1; }
 .hero-bg i { position: absolute; inset: 0; }
-.hero-bg .sharp, .hero-bg .soft { background: url(img/hero.jpg?v=202610051105) 50% 60% / cover no-repeat; }
+.hero-bg .sharp, .hero-bg .soft { background: url(img/hero.jpg?v=20261005110718) 50% 60% / cover no-repeat; }
 .hero-bg .sharp { inset: -24px; filter: blur(calc(var(--p) * 18px)) brightness(calc(.95 - var(--p) * .35)); }
 .hero-bg .soft {
   inset: -24px; filter: blur(14px) brightness(.6);
@@ -212,7 +212,7 @@ h2 { font-size: clamp(40px, 6vw, 84px); margin-bottom: 28px; }
   .hero > :not(.hero-bg) { max-width: none; }
   .hero h1 { font-size: var(--fs); margin-bottom: calc(var(--photo) - var(--top) - 70px); }
   .hero-bg { bottom: auto; height: var(--photo); overflow: hidden; }
-  .hero-bg .sharp, .hero-bg .soft { inset: 0; background: url(img/hero-m.jpg?v=202610051105) 70% 100% / cover no-repeat; }
+  .hero-bg .sharp, .hero-bg .soft { inset: 0; background: url(img/hero-m.jpg?v=20261005110718) 70% 100% / cover no-repeat; }
   .hero-bg .soft {
     -webkit-mask-image: linear-gradient(180deg, #000 0, #000 var(--top), transparent calc(var(--top) + 60px));
     mask-image: linear-gradient(180deg, #000 0, #000 var(--top), transparent calc(var(--top) + 60px));
