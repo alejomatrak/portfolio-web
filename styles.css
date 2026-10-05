@@ -39,6 +39,7 @@ ul, ol { list-style: none; padding: 0; }
 .brand { font-weight: 600; }
 .timecode { color: var(--red); font-variant-numeric: tabular-nums; letter-spacing: .08em; }
 .top nav { display: flex; gap: 24px; }
+.top a { white-space: nowrap; }
 .top nav a { color: var(--dim); transition: color .2s; padding-block: 12px; }
 .brand { padding-block: 12px; }
 .top nav a:hover { color: var(--fg); }
@@ -86,7 +87,7 @@ h2 { font-size: clamp(40px, 6vw, 84px); margin-bottom: 28px; }
    Al bajar, la capa nítida también se difumina. */
 .hero-bg { position: absolute; inset: 0; z-index: -1; }
 .hero-bg i { position: absolute; inset: 0; }
-.hero-bg .sharp, .hero-bg .soft { background: url(img/hero.jpg?v=20261005110718) 50% 60% / cover no-repeat; }
+.hero-bg .sharp, .hero-bg .soft { background: url(img/hero.jpg?v=20261005111240) 50% 60% / cover no-repeat; }
 .hero-bg .sharp { inset: -24px; filter: blur(calc(var(--p) * 18px)) brightness(calc(.95 - var(--p) * .35)); }
 .hero-bg .soft {
   inset: -24px; filter: blur(14px) brightness(.6);
@@ -200,28 +201,30 @@ h2 { font-size: clamp(40px, 6vw, 84px); margin-bottom: 28px; }
   .foot { flex-direction: column; gap: 10px; }
 }
 /* Portada en teléfono: título arriba sobre zona difuminada y tú nítido debajo, de cuerpo entero.
-   La foto ocupa la primera pantalla; el texto, los botones y los logos siguen después. */
+   La foto se coloca según dónde termina el título (no según el alto de la pantalla),
+   para que la cabeza siempre quede por debajo del texto y fuera del desenfoque. */
 @media (max-width: 700px) {
   .hero {
     justify-content: flex-start; padding-block: 96px 40px;
     --fs: min(18.5vw, 88px);
-    --top: calc(140px + 2.85 * var(--fs)); /* donde termina el título */
-    --photo: calc(100vh + 120px);          /* alto de la foto */
+    --top: calc(140px + 2.85 * var(--fs));  /* donde termina el título */
+    --photo: max(calc(2 * (100vh - var(--top) - 70px)), 170vw); /* alto de la foto */
+    --head: calc(.42 * var(--photo));       /* dónde empieza la cabeza dentro de la foto */
   }
-  @supports (height: 1svh) { .hero { --photo: calc(100svh + 120px); } }
+  @supports (height: 1svh) { .hero { --photo: max(calc(2 * (100svh - var(--top) - 70px)), 170vw); } }
   .hero > :not(.hero-bg) { max-width: none; }
-  .hero h1 { font-size: var(--fs); margin-bottom: calc(var(--photo) - var(--top) - 70px); }
-  .hero-bg { bottom: auto; height: var(--photo); overflow: hidden; }
-  .hero-bg .sharp, .hero-bg .soft { inset: 0; background: url(img/hero-m.jpg?v=20261005110718) 70% 100% / cover no-repeat; }
+  .hero h1 { font-size: var(--fs); margin-bottom: calc(.58 * var(--photo)); }
+  .hero-bg { top: calc(var(--top) + 70px - var(--head)); bottom: auto; height: var(--photo); overflow: hidden; }
+  .hero-bg .sharp, .hero-bg .soft { inset: 0; background-position: 85% 50%; }
   .hero-bg .soft {
-    -webkit-mask-image: linear-gradient(180deg, #000 0, #000 var(--top), transparent calc(var(--top) + 60px));
-    mask-image: linear-gradient(180deg, #000 0, #000 var(--top), transparent calc(var(--top) + 60px));
+    -webkit-mask-image: linear-gradient(180deg, #000 0, #000 calc(var(--head) - 75px), transparent calc(var(--head) - 12px));
+    mask-image: linear-gradient(180deg, #000 0, #000 calc(var(--head) - 75px), transparent calc(var(--head) - 12px));
   }
   .hero-bg .shade {
+    inset: -2px;
     background:
-      linear-gradient(180deg, rgba(10, 10, 11, .7) 0, rgba(10, 10, 11, .5) var(--top), transparent calc(var(--top) + 80px)),
-      linear-gradient(0deg, var(--bg) 0%, var(--bg) 3%, transparent 22%),
-      radial-gradient(80% 240px at 20% 60px, rgba(224, 38, 28, .3), transparent 70%);
+      linear-gradient(180deg, var(--bg) 0, var(--bg) 4px, rgba(10, 10, 11, .55) calc(var(--head) - 130px), rgba(10, 10, 11, .45) calc(var(--head) - 75px), transparent calc(var(--head) - 12px)),
+      linear-gradient(0deg, var(--bg) 0%, transparent 12%);
   }
 }
 @media (max-width: 420px) {
@@ -233,4 +236,9 @@ h2 { font-size: clamp(40px, 6vw, 84px); margin-bottom: 28px; }
   html { scroll-behavior: auto; }
   * { animation: none !important; transition: none !important; }
   .hero { --p: 0 !important; }
+}
+
+@media (max-width: 360px) {
+  .top { font-size: 10px; gap: 12px; }
+  .top nav { gap: 12px; }
 }
