@@ -1,5 +1,5 @@
 // Edita aquí los proyectos: textos, orden, videos. La página se arma sola a partir de esta lista.
-// vimeo: el número del video en Vimeo.  thumb: el id de la miniatura de Vimeo.
+// vimeo: el número del video en Vimeo.  thumb: el id de la miniatura de Vimeo.  cover: imagen propia de portada (opcional).
 // images: lista de fotos (carpeta img/). Un proyecto puede tener video, fotos o las dos cosas.
 const PROJECTS = [
   {
@@ -90,6 +90,7 @@ const PROJECTS = [
     tools: ['Premiere Pro', 'After Effects'],
     vimeo: 1233040712,
     ratio: '16 / 10', // proporción del video si no es 16:9
+    cover: 'img/hazlo-cover.jpg', // portada propia en vez de la miniatura de Vimeo
     thumb: '2208598326-b0a52b7181e7049412246bdb0aa2f25c571209c447d3d8f637209112a34728a9',
   },
   {

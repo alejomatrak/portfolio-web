@@ -16,9 +16,9 @@ $('brandbar').innerHTML = brandsHTML;
 const gallery = (p) => `<div class="gallery">${p.images.map((im) => `<figure><img src="${im.src}" alt="${im.caption}" loading="lazy"><figcaption>${im.caption}</figcaption></figure>`).join('')}</div>`;
 const video = (p) => `
     ${p.videoLabel ? `<p class="sublabel">${p.videoLabel}</p>` : ''}
-    <div class="player" style="--ratio:${p.ratio || '16 / 9'}">
+    <div class="player${p.cover ? ' corner' : ''}" style="--ratio:${p.ratio || '16 / 9'}">
       <button data-vimeo="${p.vimeo}" data-title="${p.videoLabel || p.title}" aria-label="Play ${p.videoLabel || p.title}">
-        <img src="${thumb(p)}" alt="" loading="lazy"><span class="play"><span class="tri"></span></span>
+        <img src="${p.cover || thumb(p)}" alt="" loading="lazy"><span class="play"><span class="tri"></span></span>
       </button>
     </div>`;
 

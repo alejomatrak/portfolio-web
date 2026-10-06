@@ -89,7 +89,7 @@ h2 { font-size: clamp(40px, 6vw, 84px); margin-bottom: 28px; }
    Al bajar, la capa nítida también se difumina. */
 .hero-bg { position: absolute; inset: 0; z-index: -1; }
 .hero-bg i { position: absolute; inset: 0; }
-.hero-bg .sharp, .hero-bg .soft { background: url(img/hero.jpg?v=20261005221637) 50% 60% / cover no-repeat; }
+.hero-bg .sharp, .hero-bg .soft { background: url(img/hero.jpg?v=20261005222019) 50% 60% / cover no-repeat; }
 .hero-bg .sharp { inset: -24px; filter: blur(calc(var(--p) * 18px)) brightness(calc(.95 - var(--p) * .35)); }
 .hero-bg .soft {
   inset: -24px; filter: blur(14px) brightness(.6);
@@ -144,6 +144,8 @@ h2 { font-size: clamp(40px, 6vw, 84px); margin-bottom: 28px; }
 }
 .play .tri { border-left-width: 20px; border-block-width: 13px; margin-left: 6px; }
 .player button:hover .play { transform: scale(1.08); }
+/* Con portada propia, el play va en la esquina para no tapar lo que hay en el centro (el logo). */
+.player.corner .play { inset: auto auto clamp(14px, 2.5vw, 32px) clamp(14px, 2.5vw, 32px); margin: 0; width: clamp(52px, 6vw, 80px); }
 .gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(6px, 1vw, 14px); }
 .gallery figure { margin: 0; }
 .gallery img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; display: block; }
