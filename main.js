@@ -15,7 +15,6 @@ $('brandbar').innerHTML = brandsHTML;
 // El video se carga al darle play, para que la página abra rápido.
 const gallery = (p) => `<div class="gallery">${p.images.map((im) => `<figure><img src="${im.src}" alt="${im.caption}" loading="lazy"><figcaption>${im.caption}</figcaption></figure>`).join('')}</div>`;
 const video = (p) => `
-    ${p.videoLabel ? `<p class="sublabel">${p.videoLabel}</p>` : ''}
     <div class="player${p.cover ? ' corner' : ''}" style="--ratio:${p.ratio || '16 / 9'}">
       <button data-vimeo="${p.vimeo}" data-title="${p.videoLabel || p.title}" aria-label="Play ${p.videoLabel || p.title}">
         <img src="${p.cover || thumb(p)}" alt="" loading="lazy"><span class="play"><span class="tri"></span></span>
@@ -27,9 +26,10 @@ $('feed').innerHTML = [...PROJECTS, REEL].map((p, i) => `
   <article class="project" id="${p.id}">
     <p class="eyebrow"><b>${p === REEL ? 'Reel' : pad(i + 1)}</b> / ${p.client} · ${p.year}</p>
     <header class="head">
-      <h2>${p.title}</h2>
-      <p class="role">${p.role}</p>
+      <h2>${p.titleLogo ? `<img class="title-logo" src="${p.titleLogo}" alt="${p.title}">` : p.title}</h2>
+      ${p.videoLabel ? '' : `<p class="role">${p.role}</p>`}
     </header>
+    ${p.videoLabel ? `<p class="sub"><b>${p.videoLabel}</b><span>${p.role}</span></p>` : ''}
     ${p.vimeo ? video(p) : gallery(p)}
     <div class="info">
       <p class="lead">${p.desc}</p>
@@ -37,7 +37,7 @@ $('feed').innerHTML = [...PROJECTS, REEL].map((p, i) => `
     </div>
     ${p.vimeo && p.images ? `
     <div class="extra">
-      <p class="sublabel">${p.imagesLabel || 'Photos'}</p>
+      <p class="sub"><b>${p.imagesLabel || 'Photos'}</b>${p.imagesNote ? `<span>${p.imagesNote}</span>` : ''}</p>
       ${gallery(p)}
       ${p.imagesDesc ? `<div class="info"><p class="lead">${p.imagesDesc}</p></div>` : ''}
     </div>` : ''}

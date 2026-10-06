@@ -5,6 +5,7 @@ const PROJECTS = [
   {
     id: 'ia-workflow',
     title: 'AI Workflow',
+    titleLogo: 'img/logo-ia-lg.png', // el título se muestra con este logo en vez de texto
     client: 'Generative AI',
     year: '2026',
     role: 'Direction, generation & editing with AI',
@@ -16,7 +17,8 @@ const PROJECTS = [
     thumb: '2208841727-22d37ef92d83d7ea5cc7d174220b2eb605f82924cc5113b5afe85f802f487f1c',
     ratio: '4 / 3',
     // Segunda parte: galería de fotos debajo del video.
-    imagesLabel: 'Brand portraits · Hazlo',
+    imagesLabel: 'Brand portraits',
+    imagesNote: 'Hazlo · AI photography',
     imagesDesc: 'Brand portraits produced with AI: starting from one photo and a set of style references, generating variations in angle, background and framing, ready for campaign.',
     images: [
       { src: 'img/ia-1.jpg', caption: 'Original background' },
