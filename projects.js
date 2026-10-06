@@ -1,7 +1,30 @@
 // Edita aquí los proyectos: textos, orden, videos. La página se arma sola a partir de esta lista.
 // vimeo: el número del video en Vimeo.  thumb: el id de la miniatura de Vimeo.
-// images: para proyectos de fotos, una lista de imágenes (carpeta img/) en lugar de video.
+// images: lista de fotos (carpeta img/). Un proyecto puede tener video, fotos o las dos cosas.
 const PROJECTS = [
+  {
+    id: 'ia-workflow',
+    title: 'IA Workflow',
+    client: 'IA generativa',
+    year: '2026',
+    role: 'Dirección, generación y montaje con IA',
+    // Video principal del proyecto.
+    videoLabel: 'IA Videoclip',
+    desc: '«Addiction», un videoclip hecho de principio a fin con IA. Planos generados en Higgsfield con Seedance 2.5; guion técnico, prompts y referencias con Claude y Gemini; montaje y color en post. Y mucha pasión.',
+    tools: ['Higgsfield', 'Seedance 2.5', 'Claude', 'Gemini'],
+    vimeo: 1233232684,
+    thumb: '2208841727-22d37ef92d83d7ea5cc7d174220b2eb605f82924cc5113b5afe85f802f487f1c',
+    ratio: '4 / 3',
+    // Segunda parte: galería de fotos debajo del video.
+    imagesLabel: 'Retratos de marca · Hazlo',
+    imagesDesc: 'Retratos de marca producidos con IA: a partir de una foto y referencias de estilo, se generan variaciones de ángulo, fondo y encuadre listas para campaña.',
+    images: [
+      { src: 'img/ia-1.jpg', caption: 'Fondo original' },
+      { src: 'img/ia-2.jpg', caption: 'Contrapicado' },
+      { src: 'img/ia-3.jpg', caption: 'Picado' },
+      { src: 'img/ia-4.jpg', caption: 'Retrato fondo azul' },
+    ],
+  },
   {
     id: 'casa-medina',
     title: 'Casa Medina 80 años',
@@ -68,22 +91,6 @@ const PROJECTS = [
     vimeo: 1233040712,
     ratio: '16 / 10', // proporción del video si no es 16:9
     thumb: '2208598326-b0a52b7181e7049412246bdb0aa2f25c571209c447d3d8f637209112a34728a9',
-  },
-  {
-    id: 'ia-workflow',
-    title: 'IA Workflow',
-    client: 'Hazlo',
-    year: '2026',
-    role: 'Fotografía y dirección de arte con IA',
-    desc: 'Flujo de trabajo con IA para producir retratos de marca: a partir de una foto y referencias de estilo, se generan variaciones de ángulo, fondo y encuadre listas para campaña.',
-    tools: ['IA generativa', 'Photoshop'],
-    // Proyecto de imágenes: en vez de video muestra una galería.
-    images: [
-      { src: 'img/ia-1.jpg', caption: 'Fondo original' },
-      { src: 'img/ia-2.jpg', caption: 'Contrapicado' },
-      { src: 'img/ia-3.jpg', caption: 'Picado' },
-      { src: 'img/ia-4.jpg', caption: 'Retrato fondo azul' },
-    ],
   },
   {
     id: 'f4',

@@ -13,10 +13,11 @@ $('brandbar').innerHTML = brandsHTML;
 
 // --- Proyectos, uno debajo del otro ---
 // El video se carga al darle play, para que la página abra rápido.
-const media = (p) => p.images
-  ? `<div class="gallery">${p.images.map((im) => `<figure><img src="${im.src}" alt="${im.caption}" loading="lazy"><figcaption>${im.caption}</figcaption></figure>`).join('')}</div>`
-  : `<div class="player" style="--ratio:${p.ratio || '16 / 9'}">
-      <button data-vimeo="${p.vimeo}" data-title="${p.title}" aria-label="Reproducir ${p.title}">
+const gallery = (p) => `<div class="gallery">${p.images.map((im) => `<figure><img src="${im.src}" alt="${im.caption}" loading="lazy"><figcaption>${im.caption}</figcaption></figure>`).join('')}</div>`;
+const video = (p) => `
+    ${p.videoLabel ? `<p class="sublabel">${p.videoLabel}</p>` : ''}
+    <div class="player" style="--ratio:${p.ratio || '16 / 9'}">
+      <button data-vimeo="${p.vimeo}" data-title="${p.videoLabel || p.title}" aria-label="Reproducir ${p.videoLabel || p.title}">
         <img src="${thumb(p)}" alt="" loading="lazy"><span class="play"><span class="tri"></span></span>
       </button>
     </div>`;
@@ -24,7 +25,7 @@ const media = (p) => p.images
 $('feed').innerHTML = [...PROJECTS, REEL].map((p, i) => `
   <article class="project" id="${p.id}">
     <p class="eyebrow"><b>${p === REEL ? 'Reel' : pad(i + 1)}</b> / ${p.client} · ${p.year}</p>
-    ${media(p)}
+    ${p.vimeo ? video(p) : gallery(p)}
     <div class="info">
       <div>
         <h2>${p.title}</h2>
@@ -35,6 +36,12 @@ $('feed').innerHTML = [...PROJECTS, REEL].map((p, i) => `
         <ul class="chips">${p.tools.map((t) => `<li>${t}</li>`).join('')}</ul>
       </div>
     </div>
+    ${p.vimeo && p.images ? `
+    <div class="extra">
+      <p class="sublabel">${p.imagesLabel || 'Fotos'}</p>
+      ${p.imagesDesc ? `<p class="lead">${p.imagesDesc}</p>` : ''}
+      ${gallery(p)}
+    </div>` : ''}
   </article>`).join('');
 
 const VIMEO = 'https://player.vimeo.com';
