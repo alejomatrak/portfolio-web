@@ -22,25 +22,24 @@ const video = (p) => `
       </button>
     </div>`;
 
+// Cada proyecto: título arriba, video (o fotos) en medio y descripción abajo.
 $('feed').innerHTML = [...PROJECTS, REEL].map((p, i) => `
   <article class="project" id="${p.id}">
     <p class="eyebrow"><b>${p === REEL ? 'Reel' : pad(i + 1)}</b> / ${p.client} · ${p.year}</p>
+    <header class="head">
+      <h2>${p.title}</h2>
+      <p class="role">${p.role}</p>
+    </header>
     ${p.vimeo ? video(p) : gallery(p)}
     <div class="info">
-      <div>
-        <h2>${p.title}</h2>
-        <p class="role">${p.role}</p>
-      </div>
-      <div>
-        <p class="lead">${p.desc}</p>
-        <ul class="chips">${p.tools.map((t) => `<li>${t}</li>`).join('')}</ul>
-      </div>
+      <p class="lead">${p.desc}</p>
+      <ul class="chips">${p.tools.map((t) => `<li>${t}</li>`).join('')}</ul>
     </div>
     ${p.vimeo && p.images ? `
     <div class="extra">
       <p class="sublabel">${p.imagesLabel || 'Photos'}</p>
-      ${p.imagesDesc ? `<p class="lead">${p.imagesDesc}</p>` : ''}
       ${gallery(p)}
+      ${p.imagesDesc ? `<div class="info"><p class="lead">${p.imagesDesc}</p></div>` : ''}
     </div>` : ''}
   </article>`).join('');
 
