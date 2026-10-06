@@ -6,7 +6,7 @@ const pad = (n) => String(n).padStart(2, '0');
 // La misma fila va en la portada y en la barra fija que aparece al bajar.
 const brandsHTML = BRANDS.map((b) => `
   <li><a href="#${b.open}" aria-label="${b.name}: ver proyecto" title="${b.name}">
-    ${b.logo ? `<img class="${b.crop ? 'crop' : ''} ${b.keep ? 'keep' : ''}" style="--s:${b.size || 1}" src="${b.logo}" alt="${b.name}">` : `<span class="${b.y2k ? 'y2k' : ''}">${b.name}</span>`}
+    ${b.logo ? `<img class="${b.crop ? 'crop' : ''} ${b.keep ? 'keep' : ''}" style="--s:${b.size || 1}" src="${b.logo}" alt="${b.name}">` : `<span>${b.name}</span>`}
   </a></li>`).join('');
 $('brands').innerHTML = brandsHTML;
 $('brandbar').innerHTML = brandsHTML;

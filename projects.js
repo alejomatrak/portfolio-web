@@ -124,7 +124,7 @@ const REEL = {
 // Si una marca no tiene logo todavía, se muestra el nombre en texto.
 // size: tamaño relativo del logo (1 = normal). Súbelo o bájalo para equilibrar la fila.
 const BRANDS = [
-  { name: 'IA Workflow', open: 'ia-workflow', y2k: true }, // texto con tipografía estilo años 2000
+  { name: 'IA Workflow', open: 'ia-workflow', logo: 'img/logo-ia.png', size: 1.9, keep: true }, // rótulo cromado años 2000
   { name: 'Huawei', open: 'huawei', logo: 'img/logo-huawei.png', size: 1.5 },
   { name: 'Four Seasons', open: 'casa-medina', logo: 'img/logo-fourseasons.svg', size: 1.45 },
   { name: 'Sony', open: 'sony-inzone', logo: 'img/logo-sony.svg', size: 0.55, crop: true },
