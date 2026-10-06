@@ -87,7 +87,7 @@ h2 { font-size: clamp(40px, 6vw, 84px); margin-bottom: 28px; }
    Al bajar, la capa nítida también se difumina. */
 .hero-bg { position: absolute; inset: 0; z-index: -1; }
 .hero-bg i { position: absolute; inset: 0; }
-.hero-bg .sharp, .hero-bg .soft { background: url(img/hero.jpg?v=20261005220128) 50% 60% / cover no-repeat; }
+.hero-bg .sharp, .hero-bg .soft { background: url(img/hero.jpg?v=20261005220259) 50% 60% / cover no-repeat; }
 .hero-bg .sharp { inset: -24px; filter: blur(calc(var(--p) * 18px)) brightness(calc(.95 - var(--p) * .35)); }
 .hero-bg .soft {
   inset: -24px; filter: blur(14px) brightness(.6);
@@ -124,8 +124,17 @@ h2 { font-size: clamp(40px, 6vw, 84px); margin-bottom: 28px; }
 .brands img.crop { aspect-ratio: 5.6; object-fit: cover; } /* icono cuadrado con el logotipo en una franja central */
 .brands span { font-family: var(--display); font-size: clamp(26px, 3vw, 38px); line-height: 1; text-transform: uppercase; letter-spacing: .02em; color: #fff; }
 
-.brands span.y2k { font-family: 'Orbitron', var(--display); font-weight: 800; font-size: clamp(19px, 2.1vw, 27px); letter-spacing: .06em; }
-.brandbar .brands span.y2k { font-size: 13px; }
+/* "IA Workflow" en cromo estilo años 2000: letra de carreras inclinada y degradado metálico */
+.brands span.y2k {
+  display: inline-block; padding: 4px 8px 4px 0;
+  font-family: 'Racing Sans One', var(--display); font-size: clamp(28px, 3.2vw, 42px); letter-spacing: .01em;
+  transform: skewX(-8deg);
+  background: linear-gradient(180deg, #fff 0%, #e9eef5 22%, #9aa6b8 42%, #3f4a5c 50%, #f7f9fc 54%, #c2ccd9 72%, #6f7b8e 88%, #eef2f7 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+  filter: drop-shadow(0 0 6px rgba(200, 215, 240, .35));
+}
+.brandbar .brands span.y2k { font-size: 19px; padding-block: 2px; }
 
 /* Work */
 .work { padding-inline: clamp(12px, 2.5vw, 40px); }
