@@ -67,6 +67,8 @@ ul, ol { list-style: none; padding: 0; }
 
 /* Shared */
 section { padding: clamp(72px, 12vh, 140px) var(--pad); }
+/* Que el encabezado y la barra de marcas no tapen el inicio de la sección al llegar por un enlace. */
+section:not(.hero) { scroll-margin-top: 56px; }
 .eyebrow { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--dim); margin-bottom: 20px; }
 .eyebrow b { color: var(--red); font-weight: 600; }
 h1, h2 { font-family: var(--display); font-weight: 400; text-transform: uppercase; line-height: .95; letter-spacing: .01em; }
@@ -87,7 +89,7 @@ h2 { font-size: clamp(40px, 6vw, 84px); margin-bottom: 28px; }
    Al bajar, la capa nítida también se difumina. */
 .hero-bg { position: absolute; inset: 0; z-index: -1; }
 .hero-bg i { position: absolute; inset: 0; }
-.hero-bg .sharp, .hero-bg .soft { background: url(img/hero.jpg?v=20261005220757) 50% 60% / cover no-repeat; }
+.hero-bg .sharp, .hero-bg .soft { background: url(img/hero.jpg?v=20261005221637) 50% 60% / cover no-repeat; }
 .hero-bg .sharp { inset: -24px; filter: blur(calc(var(--p) * 18px)) brightness(calc(.95 - var(--p) * .35)); }
 .hero-bg .soft {
   inset: -24px; filter: blur(14px) brightness(.6);

@@ -5,7 +5,7 @@ const pad = (n) => String(n).padStart(2, '0');
 // --- Logos de marcas en la portada ---
 // La misma fila va en la portada y en la barra fija que aparece al bajar.
 const brandsHTML = BRANDS.map((b) => `
-  <li><a href="#${b.open}" aria-label="${b.name}: ver proyecto" title="${b.name}">
+  <li><a href="#${b.open}" aria-label="${b.name}: view project" title="${b.name}">
     ${b.logo ? `<img class="${b.crop ? 'crop' : ''} ${b.keep ? 'keep' : ''}" style="--s:${b.size || 1}" src="${b.logo}" alt="${b.name}">` : `<span>${b.name}</span>`}
   </a></li>`).join('');
 $('brands').innerHTML = brandsHTML;
@@ -17,7 +17,7 @@ const gallery = (p) => `<div class="gallery">${p.images.map((im) => `<figure><im
 const video = (p) => `
     ${p.videoLabel ? `<p class="sublabel">${p.videoLabel}</p>` : ''}
     <div class="player" style="--ratio:${p.ratio || '16 / 9'}">
-      <button data-vimeo="${p.vimeo}" data-title="${p.videoLabel || p.title}" aria-label="Reproducir ${p.videoLabel || p.title}">
+      <button data-vimeo="${p.vimeo}" data-title="${p.videoLabel || p.title}" aria-label="Play ${p.videoLabel || p.title}">
         <img src="${thumb(p)}" alt="" loading="lazy"><span class="play"><span class="tri"></span></span>
       </button>
     </div>`;
@@ -38,7 +38,7 @@ $('feed').innerHTML = [...PROJECTS, REEL].map((p, i) => `
     </div>
     ${p.vimeo && p.images ? `
     <div class="extra">
-      <p class="sublabel">${p.imagesLabel || 'Fotos'}</p>
+      <p class="sublabel">${p.imagesLabel || 'Photos'}</p>
       ${p.imagesDesc ? `<p class="lead">${p.imagesDesc}</p>` : ''}
       ${gallery(p)}
     </div>` : ''}
@@ -56,7 +56,7 @@ function showMuted(m) {
   muted = m;
   sound.classList.toggle('unmuted', !m);
   sound.setAttribute('aria-pressed', String(!m));
-  $('sound-label').textContent = m ? 'Activar sonido' : 'Silenciar';
+  $('sound-label').textContent = m ? 'Unmute' : 'Mute';
 }
 
 function play(btn) {
