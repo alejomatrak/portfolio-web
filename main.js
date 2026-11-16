@@ -16,7 +16,7 @@ $('brandbar').innerHTML = brandsHTML;
 const gallery = (p) => `<div class="gallery">${p.images.map((im) => `<figure><img src="${im.src}" alt="${im.caption}" loading="lazy"><figcaption>${im.caption}</figcaption></figure>`).join('')}</div>`;
 const video = (p) => `
     <div class="player${p.cover ? ' corner' : ''}" style="--ratio:${p.ratio || '16 / 9'}">
-      <button data-vimeo="${p.vimeo}" data-title="${p.videoLabel || p.title}" aria-label="Play ${p.videoLabel || p.title}">
+      <button ${p.file ? `data-file="${p.file}"` : `data-vimeo="${p.vimeo}"`} data-title="${p.videoLabel || p.title}" aria-label="Play ${p.videoLabel || p.title}">
         <img src="${p.cover || thumb(p)}" alt="" loading="lazy"><span class="play"><span class="tri"></span></span>
       </button>
     </div>`;
@@ -30,12 +30,12 @@ $('feed').innerHTML = [...PROJECTS, REEL].map((p, i) => `
       ${p.videoLabel ? '' : `<p class="role">${p.role}</p>`}
     </header>
     ${p.videoLabel ? `<p class="sub"><b>${p.videoLabel}</b><span>${p.role}</span></p>` : ''}
-    ${p.vimeo ? video(p) : gallery(p)}
+    ${p.vimeo || p.file ? video(p) : gallery(p)}
     <div class="info">
       <p class="lead">${p.desc}</p>
       <ul class="chips">${p.tools.map((t) => `<li>${t}</li>`).join('')}</ul>
     </div>
-    ${p.vimeo && p.images ? `
+    ${(p.vimeo || p.file) && p.images ? `
     <div class="extra">
       <p class="sub"><b>${p.imagesLabel || 'Photos'}</b>${p.imagesNote ? `<span>${p.imagesNote}</span>` : ''}</p>
       ${gallery(p)}
@@ -62,10 +62,20 @@ function play(btn) {
   // Solo suena un video a la vez: los demás vuelven a su portada.
   document.querySelectorAll('.player.playing').forEach((el) => {
     el.classList.remove('playing');
-    el.querySelector('iframe').remove();
+    el.querySelector('iframe, video').remove();
   });
   const player = btn.parentElement;
   player.classList.add('playing');
+  if (btn.dataset.file) {
+    // Video alojado en el propio sitio.
+    player.insertAdjacentHTML('beforeend', `<video src="${btn.dataset.file}" autoplay controls playsinline title="${btn.dataset.title}"></video>`);
+    const v = player.querySelector('video');
+    v.addEventListener('volumechange', () => showMuted(v.muted));
+    v.play().catch(() => { v.muted = true; v.play(); });
+    showMuted(v.muted);
+    sound.classList.add('on');
+    return;
+  }
   player.insertAdjacentHTML('beforeend', `<iframe src="${VIMEO}/video/${btn.dataset.vimeo}?autoplay=1&title=0&byline=0&portrait=0&dnt=1&playsinline=1" title="${btn.dataset.title}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`);
   sound.classList.add('on');
 }
@@ -92,6 +102,8 @@ addEventListener('message', (e) => {
 });
 sound.addEventListener('click', () => {
   const next = !muted;
+  const v = document.querySelector('.player.playing video');
+  if (v) { v.muted = next; if (!next) v.play(); showMuted(next); return; }
   tell('setMuted', next);
   if (!next) { tell('setVolume', 1); tell('play'); }
   showMuted(next);

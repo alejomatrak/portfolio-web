@@ -1,7 +1,32 @@
 // Edita aquí los proyectos: textos, orden, videos. La página se arma sola a partir de esta lista.
 // vimeo: el número del video en Vimeo.  thumb: el id de la miniatura de Vimeo.  cover: imagen propia de portada (opcional).
+// file: video propio en la carpeta videos/ (en vez de Vimeo).
 // images: lista de fotos (carpeta img/). Un proyecto puede tener video, fotos o las dos cosas.
 const PROJECTS = [
+  {
+    id: 'hazlo-serigrafia',
+    title: 'Screen Printing Workshop',
+    client: 'Hazlo × Póngale Ruedas',
+    year: '2026',
+    role: 'Direction & editing',
+    desc: 'Promo for Hazlo’s stencil screen-printing workshop at Póngale Ruedas: cut the stencil, mix the ink and take your own garment home. Produced by Hazlo, with creative ideas and modelling by @niskua.n and support from @nenk.sur.',
+    tools: ['Premiere Pro', 'DaVinci Resolve'],
+    file: 'videos/hazlo-serigrafia.mp4',
+    cover: 'img/hazlo-serigrafia-cover.jpg',
+    ratio: '4 / 3',
+  },
+  {
+    id: 'hazlo-tabla',
+    title: 'Hazlo Skate Deck',
+    client: 'Hazlo',
+    year: '2026',
+    role: 'Motion design & 3D',
+    desc: 'Product loop for the Hazlo skate deck: the board floating in the sky, wrapped in glass ribbons, built as a vertical piece for social.',
+    tools: ['After Effects', 'Cinema 4D'],
+    file: 'videos/hazlo-tabla.mp4', // video alojado en el sitio (carpeta videos/)
+    cover: 'img/hazlo-tabla-cover.jpg',
+    ratio: '9 / 16',
+  },
   {
     id: 'ia-workflow',
     title: 'AI Workflow',
