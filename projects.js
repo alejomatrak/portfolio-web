@@ -14,18 +14,8 @@ const PROJECTS = [
     file: 'videos/hazlo-serigrafia.mp4',
     cover: 'img/hazlo-serigrafia-cover.jpg',
     ratio: '4 / 3',
-  },
-  {
-    id: 'hazlo-tabla',
-    title: 'Hazlo Skate Deck',
-    client: 'Hazlo',
-    year: '2026',
-    role: 'Motion design & 3D',
-    desc: 'Product loop for the Hazlo skate deck: the board floating in the sky, wrapped in glass ribbons, built as a vertical piece for social.',
-    tools: ['After Effects', 'Cinema 4D'],
-    file: 'videos/hazlo-tabla.mp4', // video alojado en el sitio (carpeta videos/)
-    cover: 'img/hazlo-tabla-cover.jpg',
-    ratio: '9 / 16',
+    // Pieza secundaria al lado del video, en un carrusel horizontal: corre en bucle y sin sonido, como un GIF.
+    side: { file: 'videos/hazlo-tabla-loop.mp4', poster: 'img/hazlo-tabla-cover.jpg', ratio: '9 / 16', caption: 'Hazlo skate deck · 3D loop' },
   },
   {
     id: 'ia-workflow',
