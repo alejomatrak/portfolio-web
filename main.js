@@ -21,19 +21,12 @@ const video = (p) => `
       </button>
     </div>`;
 
-// Video principal con una pieza en bucle al lado, en un carrusel que se desliza de lado.
-const rail = (p) => `
-    <div class="rail-wrap">
-      <div class="rail">
-        <div class="slide main">${video(p)}</div>
-        <figure class="slide side" style="--ratio:${p.side.ratio}">
-          <video class="loop" src="${p.side.file}" poster="${p.side.poster}" muted loop playsinline preload="none" aria-label="${p.side.caption}"></video>
-          <figcaption>${p.side.caption}</figcaption>
-        </figure>
-      </div>
-      <button class="rail-btn prev" aria-label="Previous">←</button>
-      <button class="rail-btn next" aria-label="Next">→</button>
-    </div>`;
+// Pieza en bucle (como un GIF) que va a la izquierda de la descripción.
+const loop = (s) => `
+      <figure class="loop-card" style="--ratio:${s.ratio}">
+        <video class="loop" src="${s.file}" poster="${s.poster}" muted loop playsinline preload="none" aria-label="${s.caption}"></video>
+        <figcaption>${s.caption}</figcaption>
+      </figure>`;
 
 // Cada proyecto: título arriba, video (o fotos) en medio y descripción abajo.
 $('feed').innerHTML = [...PROJECTS, REEL].map((p, i) => `
@@ -44,10 +37,13 @@ $('feed').innerHTML = [...PROJECTS, REEL].map((p, i) => `
       ${p.videoLabel ? '' : `<p class="role">${p.role}</p>`}
     </header>
     ${p.videoLabel ? `<p class="sub"><b>${p.videoLabel}</b><span>${p.role}</span></p>` : ''}
-    ${p.side ? rail(p) : p.vimeo || p.file ? video(p) : gallery(p)}
-    <div class="info">
-      <p class="lead">${p.desc}</p>
-      <ul class="chips">${p.tools.map((t) => `<li>${t}</li>`).join('')}</ul>
+    ${p.vimeo || p.file ? video(p) : gallery(p)}
+    <div class="info${p.side ? ' with-loop' : ''}">
+      ${p.side ? loop(p.side) : ''}
+      <div class="info-text">
+        <p class="lead">${p.desc}</p>
+        <ul class="chips">${p.tools.map((t) => `<li>${t}</li>`).join('')}</ul>
+      </div>
     </div>
     ${(p.vimeo || p.file) && p.images ? `
     <div class="extra">
@@ -155,22 +151,7 @@ const projectObserver = new IntersectionObserver((entries) => {
 }, { rootMargin: '-45% 0px -45% 0px' });
 document.querySelectorAll('.project').forEach((p) => projectObserver.observe(p));
 
-// Carruseles: flechas, y los videos en bucle solo corren cuando se ven.
-document.querySelectorAll('.rail-wrap').forEach((w) => {
-  const r = w.querySelector('.rail');
-  const sync = () => {
-    const over = r.scrollWidth > r.clientWidth + 4;
-    w.classList.toggle('scrolls', over);
-    w.classList.toggle('at-start', r.scrollLeft < 8);
-    w.classList.toggle('at-end', r.scrollLeft + r.clientWidth > r.scrollWidth - 8);
-  };
-  const go = (d) => r.scrollBy({ left: d * r.clientWidth * 0.8, behavior: 'smooth' });
-  w.querySelector('.prev').addEventListener('click', () => go(-1));
-  w.querySelector('.next').addEventListener('click', () => go(1));
-  r.addEventListener('scroll', sync, { passive: true });
-  addEventListener('resize', sync);
-  sync();
-});
+// Los videos en bucle solo corren cuando se ven.
 const loopObserver = new IntersectionObserver((entries) => {
   entries.forEach((e) => (e.isIntersecting ? e.target.play().catch(() => {}) : e.target.pause()));
 }, { threshold: 0.25 });
