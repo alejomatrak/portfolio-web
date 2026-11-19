@@ -89,7 +89,7 @@ h2 { font-size: clamp(40px, 6vw, 84px); margin-bottom: 28px; }
    Al bajar, la capa nítida también se difumina. */
 .hero-bg { position: absolute; inset: 0; z-index: -1; }
 .hero-bg i { position: absolute; inset: 0; }
-.hero-bg .sharp, .hero-bg .soft { background: url(img/hero.jpg?v=20261118214144) 50% 60% / cover no-repeat; }
+.hero-bg .sharp, .hero-bg .soft { background: url(img/hero.jpg?v=20261118214630) 50% 60% / cover no-repeat; }
 .hero-bg .sharp { inset: -24px; filter: blur(calc(var(--p) * 18px)) brightness(calc(.95 - var(--p) * .35)); }
 .hero-bg .soft {
   inset: -24px; filter: blur(14px) brightness(.6);
@@ -146,20 +146,38 @@ h2 { font-size: clamp(40px, 6vw, 84px); margin-bottom: 28px; }
   display: grid; place-items: center; border-radius: 50%; background: var(--red); transition: transform .25s;
 }
 .play .tri { border-left-width: 20px; border-block-width: 13px; margin-left: 6px; }
-/* Díptico: video principal y pieza en bucle a la misma altura; la descripción debajo de los dos */
-.combo { --h: clamp(320px, calc(100svh - 300px), 620px); display: grid; grid-template-columns: auto auto; grid-template-areas: "l v" "t t"; justify-content: center; column-gap: clamp(10px, 1.2vw, 16px); }
-.combo .player { grid-area: v; height: var(--h); width: auto; max-width: none; margin: 0; }
-.loop-card { grid-area: l; position: relative; height: var(--h); aspect-ratio: var(--ratio); margin: 0; background: #000; overflow: hidden; }
+/* Fila de una marca: sus piezas a la misma altura, una al lado de la otra, deslizándose a la derecha */
+.track {
+  --h: clamp(280px, calc(100svh - 360px), 580px);
+  display: flex; gap: clamp(12px, 1.6vw, 24px); overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity; scroll-padding-inline: 4px; padding: 0 4px 14px;
+  scrollbar-width: thin; scrollbar-color: #3a393b transparent;
+}
+.track::-webkit-scrollbar { height: 6px; }
+.track::-webkit-scrollbar-thumb { background: #3a393b; border-radius: 3px; }
+.card { flex: none; display: flex; flex-direction: column; scroll-snap-align: start; }
+.card > .player, .card > .loop-card, .card > .photos { height: var(--h); }
+.card .player { width: auto; max-width: none; margin: 0; }
+.loop-card { position: relative; aspect-ratio: var(--ratio); background: #000; overflow: hidden; }
 .loop-card video { width: 100%; height: 100%; object-fit: cover; display: block; }
-.loop-card figcaption { position: absolute; left: 12px; bottom: 10px; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: #fff; text-shadow: 0 1px 6px rgba(0,0,0,.6); }
-.combo .info { grid-area: t; padding-inline: 0; contain: inline-size; } /* el texto no ensancha las columnas */
+.photos { display: flex; gap: clamp(6px, .8vw, 10px); }
+.photos figure { position: relative; height: 100%; aspect-ratio: 2 / 3; margin: 0; }
+.photos img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photos figcaption { position: absolute; left: 10px; bottom: 8px; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: #fff; text-shadow: 0 1px 6px rgba(0,0,0,.7); }
+/* Nombre de la pieza sobre una línea fina; el texto de abajo no ensancha la tarjeta */
+.card-label { display: flex; align-items: baseline; justify-content: space-between; gap: 4px 16px; flex-wrap: wrap; border-top: 1px solid #3a393b; padding-top: 10px; margin-bottom: 12px; contain: inline-size; }
+.card-label b { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(18px, 1.7vw, 24px); letter-spacing: .02em; line-height: 1.1; }
+.card-label span { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); }
+.card-info { contain: inline-size; margin-top: 16px; display: flex; flex-direction: column; gap: 14px; }
+.card-info p { max-width: 62ch; color: #c9c6c1; }
+.card-info .chips { margin: 0; }
+.arrows { display: flex; gap: 8px; align-self: center; }
+.arrows button { width: 44px; height: 44px; border: 1px solid #3a393b; border-radius: 50%; color: var(--fg); font-size: 18px; display: grid; place-items: center; transition: background .2s, opacity .2s; }
+.arrows button:hover:not(:disabled) { background: var(--fg); color: var(--bg); }
+.arrows button:disabled { opacity: .3; cursor: default; }
 .player button:hover .play { transform: scale(1.08); }
 /* Con portada propia, el play va en la esquina para no tapar lo que hay en el centro (el logo). */
 .player.corner .play { inset: auto auto clamp(14px, 2.5vw, 32px) clamp(14px, 2.5vw, 32px); margin: 0; width: clamp(52px, 6vw, 80px); }
-.gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(6px, 1vw, 14px); }
-.gallery figure { margin: 0; }
-.gallery img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; display: block; }
-.gallery figcaption { margin-top: 8px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); }
 /* Subtítulo de una parte del proyecto: nombre a la izquierda, detalle a la derecha, sobre una línea fina. */
 .sub { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 4px 24px; border-top: 1px solid #3a393b; padding: 12px 4px 0; margin-bottom: 14px; }
 .sub b { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(20px, 2.2vw, 30px); letter-spacing: .02em; line-height: 1.1; }
@@ -219,18 +237,15 @@ h2 { font-size: clamp(40px, 6vw, 84px); margin-bottom: 28px; }
   .work { padding-inline: 0; }
   .work > .eyebrow, .project .eyebrow, .head, .info { padding-inline: var(--pad); }
   .sub { margin-inline: var(--pad); padding-inline: 0; }
-  .gallery { grid-template-columns: repeat(2, 1fr); padding-inline: 6px; }
-  .services { grid-template-columns: 1fr; gap: 18px; }
+  .track { --h: min(56vw, 52svh); padding-inline: var(--pad); scroll-padding-inline: var(--pad); }
+  .arrows { display: none; }
+    .services { grid-template-columns: 1fr; gap: 18px; }
   .foot { flex-direction: column; gap: 10px; }
 }
 /* Portada en teléfono: título arriba sobre zona difuminada y tú nítido debajo, de cuerpo entero.
    La foto se coloca según dónde termina el título (no según el alto de la pantalla),
    para que la cabeza siempre quede por debajo del texto y fuera del desenfoque. */
 @media (max-width: 700px) {
-  /* En teléfono también van en la misma fila: la altura se calcula para que tabla + video llenen el ancho */
-  .combo { --h: calc((100vw - 8px) / (9 / 16 + 4 / 3)); column-gap: 8px; }
-  .combo .info { padding-inline: var(--pad); }
-  .loop-card figcaption { display: none; }
   .hero {
     justify-content: flex-start; padding-block: 96px 40px;
     --fs: min(18.5vw, 88px);

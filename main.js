@@ -11,46 +11,66 @@ const brandsHTML = BRANDS.map((b) => `
 $('brands').innerHTML = brandsHTML;
 $('brandbar').innerHTML = brandsHTML;
 
-// --- Proyectos, uno debajo del otro ---
+// --- Trabajo por secciones de marca ---
+// Cada marca tiene su fila; sus piezas van una al lado de la otra y se deslizan hacia la derecha.
 // El video se carga al darle play, para que la página abra rápido.
-const gallery = (p) => `<div class="gallery">${p.images.map((im) => `<figure><img src="${im.src}" alt="${im.caption}" loading="lazy"><figcaption>${im.caption}</figcaption></figure>`).join('')}</div>`;
 const video = (p) => `
-    <div class="player${p.cover ? ' corner' : ''}" style="--ratio:${p.ratio || '16 / 9'}">
-      <button ${p.file ? `data-file="${p.file}"` : `data-vimeo="${p.vimeo}"`} data-title="${p.videoLabel || p.title}" aria-label="Play ${p.videoLabel || p.title}">
-        <img src="${p.cover || thumb(p)}" alt="" loading="lazy"><span class="play"><span class="tri"></span></span>
-      </button>
+      <div class="player${p.cover ? ' corner' : ''}" style="--ratio:${p.ratio || '16 / 9'}">
+        <button ${p.file ? `data-file="${p.file}"` : `data-vimeo="${p.vimeo}"`} data-title="${p.title}" aria-label="Play ${p.title}">
+          <img src="${p.cover || thumb(p)}" alt="" loading="lazy"><span class="play"><span class="tri"></span></span>
+        </button>
+      </div>`;
+
+// Pieza en bucle (como un GIF): corre sola y sin sonido.
+const loop = (p) => `
+      <div class="loop-card" style="--ratio:${p.ratio}">
+        <video class="loop" src="${p.loop.file}" poster="${p.loop.poster}" muted loop playsinline preload="none" aria-label="${p.title}"></video>
+      </div>`;
+
+const photos = (p) => `
+      <div class="photos">${p.images.map((im) => `<figure><img src="${im.src}" alt="${im.caption}" loading="lazy"><figcaption>${im.caption}</figcaption></figure>`).join('')}</div>`;
+
+const card = (p) => `
+    <div class="card">
+      <p class="card-label"><b>${p.title}</b><span>${p.role}</span></p>
+      ${p.images ? photos(p) : p.loop ? loop(p) : video(p)}
+      ${p.desc ? `<div class="card-info"><p>${p.desc}</p>${p.tools && p.tools.length ? `<ul class="chips">${p.tools.map((t) => `<li>${t}</li>`).join('')}</ul>` : ''}</div>` : ''}
     </div>`;
 
-// Pieza en bucle (como un GIF) que va a la izquierda de la descripción.
-const loop = (s) => `
-      <figure class="loop-card" style="--ratio:${s.ratio}">
-        <video class="loop" src="${s.file}" poster="${s.poster}" muted loop playsinline preload="none" aria-label="${s.caption}"></video>
-        <figcaption>${s.caption}</figcaption>
-      </figure>`;
-
-const info = (p) => `
-    <div class="info">
-      <p class="lead">${p.desc}</p>
-      <ul class="chips">${p.tools.map((t) => `<li>${t}</li>`).join('')}</ul>
-    </div>`;
-
-// Cada proyecto: título arriba, video (o fotos) en medio y descripción abajo.
-$('feed').innerHTML = [...PROJECTS, REEL].map((p, i) => `
-  <article class="project" id="${p.id}">
-    <p class="eyebrow"><b>${p === REEL ? 'Reel' : pad(i + 1)}</b> / ${p.client} · ${p.year}</p>
+const reelSection = { id: REEL.id, title: REEL.title, client: REEL.client, year: REEL.year, items: [REEL] };
+$('feed').innerHTML = [...SECTIONS, reelSection].map((s, i) => `
+  <article class="project" id="${s.id}">
+    <p class="eyebrow"><b>${s === reelSection ? 'Reel' : pad(i + 1)}</b> / ${s.client} · ${s.year}</p>
     <header class="head">
-      <h2>${p.titleLogo ? `<img class="title-logo" src="${p.titleLogo}" alt="${p.title}">` : p.title}</h2>
-      ${p.videoLabel ? '' : `<p class="role">${p.role}</p>`}
+      <h2>${s.titleLogo ? `<img class="title-logo" src="${s.titleLogo}" alt="${s.title}">` : s.title}</h2>
+      ${s.items.length > 1 ? `<div class="arrows"><button class="prev" aria-label="Previous">←</button><button class="next" aria-label="Next">→</button></div>` : ''}
     </header>
-    ${p.videoLabel ? `<p class="sub"><b>${p.videoLabel}</b><span>${p.role}</span></p>` : ''}
-    ${p.side ? `<div class="combo">${video(p)}${loop(p.side)}${info(p)}</div>` : `${p.vimeo || p.file ? video(p) : gallery(p)}${info(p)}`}
-    ${(p.vimeo || p.file) && p.images ? `
-    <div class="extra">
-      <p class="sub"><b>${p.imagesLabel || 'Photos'}</b>${p.imagesNote ? `<span>${p.imagesNote}</span>` : ''}</p>
-      ${gallery(p)}
-      ${p.imagesDesc ? `<div class="info"><p class="lead">${p.imagesDesc}</p></div>` : ''}
-    </div>` : ''}
+    <div class="track">${s.items.map(card).join('')}</div>
   </article>`).join('');
+
+// Flechas: deslizan la fila una pieza a la vez.
+document.addEventListener('click', (e) => {
+  const arrow = e.target.closest('.arrows button');
+  if (!arrow) return;
+  const track = arrow.closest('.project').querySelector('.track');
+  const cards = [...track.children];
+  const x = track.scrollLeft;
+  const pos = cards.map((c) => c.offsetLeft - track.firstElementChild.offsetLeft);
+  const target = arrow.classList.contains('next') ? pos.find((l) => l > x + 4) : [...pos].reverse().find((l) => l < x - 4);
+  track.scrollTo({ left: target ?? (arrow.classList.contains('next') ? track.scrollWidth : 0), behavior: 'smooth' });
+});
+function updateArrows(track) {
+  const a = track.closest('.project').querySelector('.arrows');
+  if (!a) return;
+  a.querySelector('.prev').disabled = track.scrollLeft < 4;
+  a.querySelector('.next').disabled = track.scrollLeft > track.scrollWidth - track.clientWidth - 4;
+  a.hidden = track.scrollWidth <= track.clientWidth + 4;
+}
+document.querySelectorAll('.track').forEach((t) => {
+  t.addEventListener('scroll', () => updateArrows(t), { passive: true });
+  addEventListener('resize', () => updateArrows(t));
+  updateArrows(t);
+});
 
 const VIMEO = 'https://player.vimeo.com';
 const sound = $('sound');
