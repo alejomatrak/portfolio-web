@@ -28,6 +28,12 @@ const loop = (s) => `
         <figcaption>${s.caption}</figcaption>
       </figure>`;
 
+const info = (p) => `
+    <div class="info">
+      <p class="lead">${p.desc}</p>
+      <ul class="chips">${p.tools.map((t) => `<li>${t}</li>`).join('')}</ul>
+    </div>`;
+
 // Cada proyecto: título arriba, video (o fotos) en medio y descripción abajo.
 $('feed').innerHTML = [...PROJECTS, REEL].map((p, i) => `
   <article class="project" id="${p.id}">
@@ -37,14 +43,7 @@ $('feed').innerHTML = [...PROJECTS, REEL].map((p, i) => `
       ${p.videoLabel ? '' : `<p class="role">${p.role}</p>`}
     </header>
     ${p.videoLabel ? `<p class="sub"><b>${p.videoLabel}</b><span>${p.role}</span></p>` : ''}
-    ${p.vimeo || p.file ? video(p) : gallery(p)}
-    <div class="info${p.side ? ' with-loop' : ''}">
-      ${p.side ? loop(p.side) : ''}
-      <div class="info-text">
-        <p class="lead">${p.desc}</p>
-        <ul class="chips">${p.tools.map((t) => `<li>${t}</li>`).join('')}</ul>
-      </div>
-    </div>
+    ${p.side ? `<div class="combo">${video(p)}${loop(p.side)}${info(p)}</div>` : `${p.vimeo || p.file ? video(p) : gallery(p)}${info(p)}`}
     ${(p.vimeo || p.file) && p.images ? `
     <div class="extra">
       <p class="sub"><b>${p.imagesLabel || 'Photos'}</b>${p.imagesNote ? `<span>${p.imagesNote}</span>` : ''}</p>
