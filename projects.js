@@ -4,20 +4,6 @@
 // images: lista de fotos (carpeta img/). Un proyecto puede tener video, fotos o las dos cosas.
 const PROJECTS = [
   {
-    id: 'hazlo-serigrafia',
-    title: 'Screen Printing Workshop',
-    client: 'Hazlo × Póngale Ruedas',
-    year: '2026',
-    role: 'Direction & editing',
-    desc: 'Promo for Hazlo’s stencil screen-printing workshop at Póngale Ruedas: cut the stencil, mix the ink and take your own garment home. Produced by Hazlo, with creative ideas and modelling by @niskua.n and support from @nenk.sur.',
-    tools: ['Premiere Pro', 'DaVinci Resolve'],
-    file: 'videos/hazlo-serigrafia.mp4',
-    cover: 'img/hazlo-serigrafia-cover.jpg',
-    ratio: '4 / 3',
-    // Pieza secundaria al lado del video, en un carrusel horizontal: corre en bucle y sin sonido, como un GIF.
-    side: { file: 'videos/hazlo-tabla-loop.mp4', poster: 'img/hazlo-tabla-cover.jpg', ratio: '9 / 16', caption: 'Hazlo skate deck · 3D loop' },
-  },
-  {
     id: 'ia-workflow',
     title: 'AI Workflow',
     titleLogo: 'img/logo-ia-lg.png', // el título se muestra con este logo en vez de texto
@@ -41,6 +27,20 @@ const PROJECTS = [
       { src: 'img/ia-3.jpg', caption: 'High angle' },
       { src: 'img/ia-4.jpg', caption: 'Blue backdrop portrait' },
     ],
+  },
+  {
+    id: 'hazlo-serigrafia',
+    title: 'Screen Printing Workshop',
+    client: 'Hazlo × Póngale Ruedas',
+    year: '2026',
+    role: 'Direction & editing',
+    desc: 'Promo for Hazlo’s stencil screen-printing workshop at Póngale Ruedas: cut the stencil, mix the ink and take your own garment home. Produced by Hazlo, with creative ideas and modelling by @niskua.n and support from @nenk.sur.',
+    tools: ['Premiere Pro', 'DaVinci Resolve'],
+    file: 'videos/hazlo-serigrafia.mp4',
+    cover: 'img/hazlo-serigrafia-cover.jpg',
+    ratio: '4 / 3',
+    // Pieza secundaria al lado del video, en un carrusel horizontal: corre en bucle y sin sonido, como un GIF.
+    side: { file: 'videos/hazlo-tabla-loop.mp4', poster: 'img/hazlo-tabla-cover.jpg', ratio: '9 / 16', caption: 'Hazlo skate deck · 3D loop' },
   },
   {
     id: 'casa-medina',
