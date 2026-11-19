@@ -143,11 +143,11 @@ const REEL = {
 // size: tamaño relativo del logo (1 = normal). Súbelo o bájalo para equilibrar la fila.
 const BRANDS = [
   { name: 'AI Workflow', open: 'ia-workflow', logo: 'img/logo-ia.png', size: 1.9, keep: true }, // rótulo cromado años 2000
+  { name: 'Hazlo', open: 'hazlo', logo: 'img/logo-hazlo.png', size: 0.5 },
   { name: 'Huawei', open: 'huawei', logo: 'img/logo-huawei.png', size: 1.5 },
   { name: 'Four Seasons', open: 'casa-medina', logo: 'img/logo-fourseasons.svg', size: 1.45 },
   { name: 'Sony', open: 'sony-inzone', logo: 'img/logo-sony.svg', size: 0.55, crop: true },
   { name: 'T4', open: 'ego-t4', logo: 'img/logo-t4.png', keep: true },
   { name: 'eGo', open: 'ego-t4', logo: 'img/logo-ego.png', size: 0.8, keep: true },
-  { name: 'Hazlo', open: 'hazlo', logo: 'img/logo-hazlo.png', size: 0.5 },
   { name: 'F4', open: 'f4' },
 ];
