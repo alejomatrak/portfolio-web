@@ -17,16 +17,6 @@ const PROJECTS = [
     vimeo: 1233232684,
     thumb: '2208841727-22d37ef92d83d7ea5cc7d174220b2eb605f82924cc5113b5afe85f802f487f1c',
     ratio: '4 / 3',
-    // Segunda parte: galería de fotos debajo del video.
-    imagesLabel: 'Brand portraits',
-    imagesNote: 'Hazlo · AI photography',
-    imagesDesc: 'Brand portraits produced with AI: starting from one photo and a set of style references, generating variations in angle, background and framing, ready for campaign.',
-    images: [
-      { src: 'img/ia-1.jpg', caption: 'Original background' },
-      { src: 'img/ia-2.jpg', caption: 'Low angle' },
-      { src: 'img/ia-3.jpg', caption: 'High angle' },
-      { src: 'img/ia-4.jpg', caption: 'Blue backdrop portrait' },
-    ],
   },
   {
     id: 'hazlo-serigrafia',
@@ -41,6 +31,21 @@ const PROJECTS = [
     ratio: '4 / 3',
     // Pieza secundaria al lado del video, en un carrusel horizontal: corre en bucle y sin sonido, como un GIF.
     side: { file: 'videos/hazlo-tabla-loop.mp4', poster: 'img/hazlo-tabla-cover.jpg', ratio: '9 / 16', caption: 'Hazlo skate deck · 3D loop' },
+  },
+  {
+    id: 'ia-retratos',
+    title: 'Brand Portraits',
+    client: 'Hazlo · AI photography',
+    year: '2026',
+    role: 'Generative AI',
+    desc: 'Brand portraits produced with AI: starting from one photo and a set of style references, generating variations in angle, background and framing, ready for campaign.',
+    tools: [],
+    images: [
+      { src: 'img/ia-1.jpg', caption: 'Original background' },
+      { src: 'img/ia-2.jpg', caption: 'Low angle' },
+      { src: 'img/ia-3.jpg', caption: 'High angle' },
+      { src: 'img/ia-4.jpg', caption: 'Blue backdrop portrait' },
+    ],
   },
   {
     id: 'casa-medina',
