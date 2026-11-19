@@ -82,6 +82,47 @@ const SECTIONS = [
         vimeo: 1230037186,
         thumb: '2204846376-af82214321355b164d8ca771aa030df4fdd8119849953727e180992f4acac079',
       },
+      // Entregas de octubre para Boulevardier. versions: el mismo video con otro audio; se escoge debajo del título.
+      {
+        title: 'Evolution',
+        role: 'Boulevardier · 16:10',
+        file: 'videos/fs-evolucion-cesar.mp4',
+        versions: [{ label: 'César', file: 'videos/fs-evolucion-cesar.mp4' }, { label: 'Claudia', file: 'videos/fs-evolucion-claudia.mp4' }],
+        cover: 'img/fs-evolucion-cesar.jpg',
+        ratio: '16 / 10',
+      },
+      {
+        title: 'Anniversary',
+        role: 'Boulevardier · 9:16',
+        file: 'videos/fs-aniversario-cesar.mp4',
+        versions: [{ label: 'César', file: 'videos/fs-aniversario-cesar.mp4' }, { label: 'Claudia', file: 'videos/fs-aniversario-claudia.mp4' }],
+        cover: 'img/fs-aniversario-cesar.jpg',
+        ratio: '9 / 16',
+      },
+      {
+        title: 'Second Floor',
+        role: 'Boulevardier · carousel loop',
+        loop: { file: 'videos/fs-carrusel-segundo-piso.mp4', poster: 'img/fs-carrusel-segundo-piso.jpg' },
+        ratio: '4 / 3',
+      },
+      {
+        title: 'Library',
+        role: 'Boulevardier · carousel loop',
+        loop: { file: 'videos/fs-carrusel-biblioteca.mp4', poster: 'img/fs-carrusel-biblioteca.jpg' },
+        ratio: '4 / 3',
+      },
+      {
+        title: 'Terrace',
+        role: 'Boulevardier · carousel loop',
+        loop: { file: 'videos/fs-carrusel-terraza.mp4', poster: 'img/fs-carrusel-terraza.jpg' },
+        ratio: '4 / 3',
+      },
+      {
+        title: 'Bar',
+        role: 'Boulevardier · carousel loop',
+        loop: { file: 'videos/fs-carrusel-barra.mp4', poster: 'img/fs-carrusel-barra.jpg' },
+        ratio: '4 / 3',
+      },
     ],
   },
   {

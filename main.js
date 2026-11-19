@@ -39,6 +39,7 @@ const card = (p) => `
     <div class="card">
       <p class="card-label"><b>${p.title}</b><span>${p.role}</span></p>
       ${p.loop ? loop(p) : video(p)}
+      ${p.versions ? `<div class="versions">${p.versions.map((v, k) => `<button data-file="${v.file}"${k ? '' : ' class="on"'}>${v.label}</button>`).join('')}</div>` : ''}
       ${p.desc ? `<div class="card-info"><p>${p.desc}</p>${p.tools && p.tools.length ? `<ul class="chips">${p.tools.map((t) => `<li>${t}</li>`).join('')}</ul>` : ''}</div>` : ''}
     </div>`;
 
@@ -121,6 +122,21 @@ function play(btn) {
 document.addEventListener('click', (e) => {
   const btn = e.target.closest('.player button');
   if (btn) play(btn);
+});
+// Versiones de un mismo video (otro audio): cambian el archivo del reproductor y lo ponen a sonar.
+document.addEventListener('click', (e) => {
+  const v = e.target.closest('.versions button');
+  if (!v) return;
+  const card = v.closest('.card');
+  card.querySelectorAll('.versions button').forEach((b) => b.classList.toggle('on', b === v));
+  const player = card.querySelector('.player');
+  const btn = player.querySelector('button');
+  btn.dataset.file = v.dataset.file;
+  if (player.classList.contains('playing')) {
+    const vid = player.querySelector('video');
+    vid.src = v.dataset.file;
+    vid.play().catch(() => {});
+  } else play(btn);
 });
 
 // El reproductor de Vimeo avisa si arrancó en silencio (en teléfonos suele hacerlo).
