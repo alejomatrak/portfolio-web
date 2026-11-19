@@ -27,26 +27,36 @@ const loop = (p) => `
         <video class="loop" src="${p.loop.file}" poster="${p.loop.poster}" muted loop playsinline preload="none" aria-label="${p.title}"></video>
       </div>`;
 
+// Fotos: van debajo de la fila de la marca, a todo el ancho.
 const photos = (p) => `
-      <div class="photos">${p.images.map((im) => `<figure><img src="${im.src}" alt="${im.caption}" loading="lazy"><figcaption>${im.caption}</figcaption></figure>`).join('')}</div>`;
+    <div class="extra">
+      <p class="sub"><b>${p.title}</b><span>${p.role}</span></p>
+      <div class="gallery">${p.images.map((im) => `<figure><img src="${im.src}" alt="${im.caption}" loading="lazy"><figcaption>${im.caption}</figcaption></figure>`).join('')}</div>
+      ${p.desc ? `<div class="info"><p class="lead">${p.desc}</p></div>` : ''}
+    </div>`;
 
 const card = (p) => `
     <div class="card">
       <p class="card-label"><b>${p.title}</b><span>${p.role}</span></p>
-      ${p.images ? photos(p) : p.loop ? loop(p) : video(p)}
+      ${p.loop ? loop(p) : video(p)}
       ${p.desc ? `<div class="card-info"><p>${p.desc}</p>${p.tools && p.tools.length ? `<ul class="chips">${p.tools.map((t) => `<li>${t}</li>`).join('')}</ul>` : ''}</div>` : ''}
     </div>`;
 
 const reelSection = { id: REEL.id, title: REEL.title, client: REEL.client, year: REEL.year, items: [REEL] };
-$('feed').innerHTML = [...SECTIONS, reelSection].map((s, i) => `
+$('feed').innerHTML = [...SECTIONS, reelSection].map((s, i) => {
+  const row = s.items.filter((p) => !p.images); // videos y bucles, en la fila que se desliza
+  const below = s.items.filter((p) => p.images); // fotos, debajo de la fila
+  return `
   <article class="project" id="${s.id}">
     <p class="eyebrow"><b>${s === reelSection ? 'Reel' : pad(i + 1)}</b> / ${s.client} · ${s.year}</p>
     <header class="head">
       <h2>${s.titleLogo ? `<img class="title-logo" src="${s.titleLogo}" alt="${s.title}">` : s.title}</h2>
-      ${s.items.length > 1 ? `<div class="arrows"><button class="prev" aria-label="Previous">←</button><button class="next" aria-label="Next">→</button></div>` : ''}
+      ${row.length > 1 ? `<div class="arrows"><button class="prev" aria-label="Previous">←</button><button class="next" aria-label="Next">→</button></div>` : ''}
     </header>
-    <div class="track">${s.items.map(card).join('')}</div>
-  </article>`).join('');
+    <div class="track${row.length === 1 ? ' single' : ''}">${row.map(card).join('')}</div>
+    ${below.map(photos).join('')}
+  </article>`;
+}).join('');
 
 // Flechas: deslizan la fila una pieza a la vez.
 document.addEventListener('click', (e) => {
