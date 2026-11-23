@@ -7,6 +7,22 @@
 //   images: fotos (carpeta img/), van juntas en una misma tarjeta.
 const SECTIONS = [
   {
+    id: 'motion-graphics',
+    title: 'Motion Graphics',
+    client: 'Motion design',
+    year: '2026',
+    items: [
+      {
+        title: 'Motion Graphics Showreel 2026',
+        role: 'Motion design, direction & edit',
+        desc: 'A motion reel for eight fictional brands: app launches, product breakdowns, crypto UI, AI workflows and web, all cut to the beat. Every frame designed and animated in code, with product renders generated with AI.',
+        tools: ['Python', 'Magnific', 'Claude Code'],
+        file: 'videos/motion-graphics-showreel-2026.mp4',
+        cover: 'img/motion-graphics-showreel.jpg',
+      },
+    ],
+  },
+  {
     id: 'ia-workflow',
     title: 'AI Workflow',
     titleLogo: 'img/logo-ia-lg.png', // el título se muestra con este logo en vez de texto
@@ -226,6 +242,7 @@ const REEL = {
 // Si una marca no tiene logo todavía, se muestra el nombre en texto.
 // size: tamaño relativo del logo (1 = normal). Súbelo o bájalo para equilibrar la fila.
 const BRANDS = [
+  { name: 'Motion Graphics', open: 'motion-graphics' },
   { name: 'AI Workflow', open: 'ia-workflow', logo: 'img/logo-ia.png', size: 1.9, keep: true }, // rótulo cromado años 2000
   { name: 'Hazlo', open: 'hazlo', logo: 'img/logo-hazlo.png', size: 0.5 },
   { name: 'Huawei', open: 'huawei', logo: 'img/logo-huawei.png', size: 1.5 },
