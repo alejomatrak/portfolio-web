@@ -5,7 +5,7 @@ const pad = (n) => String(n).padStart(2, '0');
 // --- Logos de marcas en la portada ---
 // La misma fila va en la portada y en la barra fija que aparece al bajar.
 const brandsHTML = BRANDS.map((b) => `
-  <li><a href="#${b.open}" aria-label="${b.name}: view project" title="${b.name}">
+  <li${b.wide ? ' class="wide"' : ''}><a href="#${b.open}" aria-label="${b.name}: view project" title="${b.name}">
     ${b.logo ? `<img class="${b.crop ? 'crop' : ''} ${b.keep ? 'keep' : ''}" style="--s:${b.size || 1}" src="${b.logo}" alt="${b.name}">` : `<span>${b.name}</span>`}
   </a></li>`).join('');
 $('brands').innerHTML = brandsHTML;

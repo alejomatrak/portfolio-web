@@ -242,7 +242,7 @@ const REEL = {
 // Si una marca no tiene logo todavía, se muestra el nombre en texto.
 // size: tamaño relativo del logo (1 = normal). Súbelo o bájalo para equilibrar la fila.
 const BRANDS = [
-  { name: 'Motion Graphics', open: 'motion-graphics' },
+  { name: 'Motion Graphics', open: 'motion-graphics', logo: 'img/logo-motion.png', size: 1.15, keep: true, wide: true }, // rótulo del reel con estela roja
   { name: 'AI Workflow', open: 'ia-workflow', logo: 'img/logo-ia.png', size: 1.9, keep: true }, // rótulo cromado años 2000
   { name: 'Hazlo', open: 'hazlo', logo: 'img/logo-hazlo.png', size: 0.5 },
   { name: 'Huawei', open: 'huawei', logo: 'img/logo-huawei.png', size: 1.5 },
