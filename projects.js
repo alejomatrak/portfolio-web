@@ -15,8 +15,8 @@ const SECTIONS = [
       {
         title: 'Motion Graphics Showreel 2026',
         role: 'Motion design, direction & edit',
-        desc: 'A motion reel for eight fictional brands: app launches, product breakdowns, crypto UI, AI workflows and web, all cut to the beat. Every frame designed and animated in code, with product renders generated with AI.',
-        tools: ['Python', 'Magnific', 'Claude Code'],
+        desc: 'A motion reel for eight fictional brands: app launches, product breakdowns, crypto UI, AI workflows and web, all cut to the beat. Every frame designed and animated by hand, with product renders generated with AI.',
+        tools: ['After Effects', 'Magnific', 'Higgsfield'],
         file: 'videos/motion-graphics-showreel-2026.mp4?v=30',
         cover: 'img/motion-graphics-showreel.jpg?v=30',
       },
